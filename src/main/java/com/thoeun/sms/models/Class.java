@@ -1,5 +1,6 @@
 package com.thoeun.sms.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,15 +32,19 @@ public class Class {
     private String scheduleDays;
 
     @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Attendance> attendanceRecords;
 
     @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Assignment> assignments;
 
     @OneToMany(mappedBy = "aClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Exam> exams;
 
     @CreationTimestamp

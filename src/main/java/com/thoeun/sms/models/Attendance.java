@@ -1,5 +1,8 @@
 package com.thoeun.sms.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +14,7 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "attendanceId")
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,23 +22,23 @@ public class Attendance {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonIdentityReference(alwaysAsId = true)
     private Student student;
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
-    private Class aClass; // Changed from 'class' to 'aClass'
+    @JsonIdentityReference(alwaysAsId = true)
+    private Class aClass;
 
     private Date date;
-    private String status; // Present, Absent, Late
+    private String status;
     private String remarks;
 
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false) // Automatically set when the entity is created
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at") // Automatically updated when the entity is modified
+    @Column(name = "updated_at")
     private Date updatedAt;
-
-    // Getters and Setters are provided by Lombok
 }
